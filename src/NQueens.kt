@@ -1,8 +1,11 @@
+import java.lang.System.exit
 import kotlin.math.pow
 
 fun main() {
+    val size = 8;
     val nQueens = NQueens();
-    nQueens.queen(4, 4);
+    var bitmask = nQueens.queen(4, size);
+    nQueens.print(bitmask, size);
 }
 
 class NQueens {
@@ -16,7 +19,7 @@ class NQueens {
 
         var bitmask : Long = 0;
 
-        for(idx in 0..n) {
+        for(idx in 0 until n) {
             if(idx < y) {
                 val yy = fieldNo - (y - idx)  * (n+1);
                 if(yy >= idx * n && yy < idx * n + n) {
@@ -30,7 +33,7 @@ class NQueens {
             }
         }
 
-        for(idx in 0..n) {
+        for(idx in 0 until n) {
             if(idx < y) {
                 val yy = fieldNo - (y - idx)  * (n-1);
                 if(yy >= idx * n && yy < idx * n + n) {
@@ -44,6 +47,7 @@ class NQueens {
             }
         }
 
+
         return bitmask;
     }
 
@@ -55,17 +59,15 @@ class NQueens {
         var shiftValue : Long = 0;
 
 
-        for(idx in 0..n) {
+        for(idx in 0 until n) {
             shiftValue += 2.0.pow(idx).toLong();
         }
 
         bitmask = bitmask or (shiftValue shl (y*n));
 
-        for(idx in 0..n) {
+        for(idx in 0 until n) {
             bitmask = bitmask or 2.0.pow(x + idx * n).toLong();
         }
-
-        print(bitmask, n);
 
         return bitmask;
     }
@@ -73,7 +75,7 @@ class NQueens {
     fun print(bitmask: Long, size: Int) {
         System.out.printf("\n");
         var y = 0;
-        for(idx in 0..size * size) {
+        for(idx in 0 until size * size) {
             val value : Long = (bitmask and (1L shl idx)) shr idx;
             if(y != idx/size) {
                 System.out.printf("\n");
