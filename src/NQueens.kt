@@ -20,24 +20,16 @@ class NQueens {
         var bitmask : Long = 0;
 
         for(idx in 0 until n) {
-            if(idx < y) {
-                var bit = fieldNo - (y - idx) * (n+1);
-                if(bit >= idx * n && bit < idx * n + n) {
-                    bitmask = bitmask or 2.0.pow(bit).toLong();
-                }
-                bit = fieldNo - (y - idx)  * (n-1);
-                if(bit >= idx * n && bit < idx * n + n) {
-                    bitmask = bitmask or 2.0.pow(bit).toLong();
-                }
-            } else {
-                var bit = fieldNo + (idx - y)  * (n+1);
-                if(bit >= idx * n && bit < idx * n + n) {
-                    bitmask = bitmask or 2.0.pow(bit).toLong();
-                }
-                bit = fieldNo + (idx - y)  * (n-1);
-                if(bit >= idx * n && bit < idx * n + n) {
-                    bitmask = bitmask or 2.0.pow(bit).toLong();
-                }
+            // Forward diagonal.
+            var bit = fieldNo + (idx - y) * (n+1);
+            if(bit >= idx * n && bit < idx * n + n) {
+                bitmask = bitmask or 2.0.pow(bit).toLong();
+            }
+
+            // Backward diagonal.
+            bit = fieldNo + (idx - y)  * (n-1);
+            if(bit >= idx * n && bit < idx * n + n) {
+                bitmask = bitmask or 2.0.pow(bit).toLong();
             }
         }
         return bitmask;
