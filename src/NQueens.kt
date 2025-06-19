@@ -4,7 +4,7 @@ import kotlin.math.pow
 fun main() {
     val size = 8;
     val nQueens = NQueens();
-    var bitmask = nQueens.queen(4, size);
+    var bitmask = nQueens.queen(10, size);
     nQueens.print(bitmask, size);
 }
 
