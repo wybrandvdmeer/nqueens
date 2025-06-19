@@ -1,9 +1,11 @@
 import kotlin.math.pow
 
-class Main {
-    fun main() {
-        queen(4, 4);
-    }
+fun main() {
+    val nQueens = NQueens();
+    nQueens.queen(4, 4);
+}
+
+class NQueens {
 
     fun queen(fieldNo: Int, n: Int): Long {
         return bishop(fieldNo, n) or rook(fieldNo, n);
