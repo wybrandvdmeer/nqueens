@@ -1,10 +1,11 @@
 import java.util.List;
 
+import static java.lang.System.exit;
+
 public class NQueens {
     public static void main(String[] args) {
         int n = 6;
         long bitmask = queen(15, n);
-
         print(bitmask, n);
     }
 
@@ -22,12 +23,12 @@ public class NQueens {
             if(idx < y) {
                 int yy = fieldNo - (y - idx)  * (n+1);
                 if(yy >= idx * n && yy < idx * n + n) {
-                    bitmask |= ((int) Math.pow(2, yy));
+                    bitmask |= ((long) Math.pow(2, yy));
                 }
             } else {
                 int yy = fieldNo + (idx - y)  * (n+1);
                 if(yy >= idx * n && yy < idx * n + n) {
-                    bitmask |= ((int) Math.pow(2, yy));
+                    bitmask |= ((long) Math.pow(2, yy));
                 }
             }
         }
@@ -36,12 +37,12 @@ public class NQueens {
             if(idx < y) {
                 int yy = fieldNo - (y - idx)  * (n-1);
                 if(yy >= idx * n && yy < idx * n + n) {
-                    bitmask |= ((int) Math.pow(2, yy));
+                    bitmask |= ((long) Math.pow(2, yy));
                 }
             } else {
                 int yy = fieldNo + (idx - y)  * (n-1);
                 if(yy >= idx * n && yy < idx * n + n) {
-                    bitmask |= ((int) Math.pow(2, yy));
+                    bitmask |= ((long) Math.pow(2, yy));
                 }
             }
         }
@@ -55,15 +56,15 @@ public class NQueens {
 
         long bitmask = 0;
 
-        int shiftValue = 0;
+        long shiftValue = 0;
         for(int idx=0; idx < n; idx++) {
-            shiftValue += (int)Math.pow(2, idx);
+            shiftValue += (long)Math.pow(2, idx);
         }
 
         bitmask |= (shiftValue << (y*n));
 
         for(int idx=0; idx < n; idx++) {
-            bitmask |= ((int)Math.pow(2, x + idx * n));
+            bitmask |= ((long)Math.pow(2, x + idx * n));
         }
 
         print(bitmask, n);
@@ -75,7 +76,7 @@ public class NQueens {
         System.out.printf("\n");
         int y = 0;
         for(int idx=0; idx < size * size; idx++) {
-            long value = (bitmask & (1 << idx)) >> idx;
+            long value = (bitmask & (1L << idx)) >> idx;
             if(y != idx/size) {
                 System.out.printf("\n");
                 y = idx/size;
