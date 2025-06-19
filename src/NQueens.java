@@ -3,20 +3,20 @@ import java.util.List;
 public class NQueens {
     public static void main(String[] args) {
         int n = 6;
-        int bitmask = queen(15, n);
+        long bitmask = queen(15, n);
 
         print(bitmask, n);
     }
 
-    private static int queen(int fieldNo, int n) {
+    private static long queen(int fieldNo, int n) {
         return bishop(fieldNo, n) | rook(fieldNo, n);
     }
 
-    private static int bishop(int fieldNo, int n) {
+    private static long bishop(int fieldNo, int n) {
         int x = (fieldNo%n);
         int y = fieldNo/n;
 
-        int bitmask = 0;
+        long bitmask = 0;
 
         for(int idx=0; idx < n; idx++) {
             if(idx < y) {
@@ -49,11 +49,11 @@ public class NQueens {
         return bitmask;
     }
 
-    private static int rook(int fieldNo, int n) {
+    private static long rook(int fieldNo, int n) {
         int x = (fieldNo%n);
         int y = fieldNo/n;
 
-        int bitmask = 0;
+        long bitmask = 0;
 
         int shiftValue = 0;
         for(int idx=0; idx < n; idx++) {
@@ -71,11 +71,11 @@ public class NQueens {
         return bitmask;
     }
 
-    private static void print(int bitmask, int size) {
+    private static void print(long bitmask, int size) {
         System.out.printf("\n");
         int y = 0;
         for(int idx=0; idx < size * size; idx++) {
-            int value = (bitmask & (1 << idx)) >> idx;
+            long value = (bitmask & (1 << idx)) >> idx;
             if(y != idx/size) {
                 System.out.printf("\n");
                 y = idx/size;
