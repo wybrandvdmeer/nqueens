@@ -21,33 +21,25 @@ class NQueens {
 
         for(idx in 0 until n) {
             if(idx < y) {
-                val yy = fieldNo - (y - idx)  * (n+1);
-                if(yy >= idx * n && yy < idx * n + n) {
-                    bitmask = bitmask or 2.0.pow(yy).toLong();
+                var bit = fieldNo - (y - idx) * (n+1);
+                if(bit >= idx * n && bit < idx * n + n) {
+                    bitmask = bitmask or 2.0.pow(bit).toLong();
+                }
+                bit = fieldNo - (y - idx)  * (n-1);
+                if(bit >= idx * n && bit < idx * n + n) {
+                    bitmask = bitmask or 2.0.pow(bit).toLong();
                 }
             } else {
-                val yy = fieldNo + (idx - y)  * (n+1);
-                if(yy >= idx * n && yy < idx * n + n) {
-                    bitmask = bitmask or 2.0.pow(yy).toLong();
+                var bit = fieldNo + (idx - y)  * (n+1);
+                if(bit >= idx * n && bit < idx * n + n) {
+                    bitmask = bitmask or 2.0.pow(bit).toLong();
+                }
+                bit = fieldNo + (idx - y)  * (n-1);
+                if(bit >= idx * n && bit < idx * n + n) {
+                    bitmask = bitmask or 2.0.pow(bit).toLong();
                 }
             }
         }
-
-        for(idx in 0 until n) {
-            if(idx < y) {
-                val yy = fieldNo - (y - idx)  * (n-1);
-                if(yy >= idx * n && yy < idx * n + n) {
-                    bitmask = bitmask or 2.0.pow(yy).toLong();
-                }
-            } else {
-                val yy = fieldNo + (idx - y)  * (n-1);
-                if(yy >= idx * n && yy < idx * n + n) {
-                    bitmask = bitmask or 2.0.pow(yy).toLong();
-                }
-            }
-        }
-
-
         return bitmask;
     }
 
@@ -57,7 +49,6 @@ class NQueens {
 
         var bitmask : Long = 0;
         var shiftValue : Long = 0;
-
 
         for(idx in 0 until n) {
             shiftValue += 2.0.pow(idx).toLong();
