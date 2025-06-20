@@ -1,3 +1,4 @@
+import java.lang.System.exit
 import kotlin.math.pow
 import kotlin.streams.toList
 
@@ -15,7 +16,8 @@ class NQueens(val size: Int) {
 
         for(y in 0 until size) {
             val foundQueens = mutableListOf<Int>()
-            nQueens(foundQueens, queen(toFieldNo(0, y)), toFieldNo(0, y))
+            val fieldNo = toFieldNo(0, y)
+            nQueens(foundQueens, queen(fieldNo), fieldNo)
         }
 
         /* Convert to neetcode requirement. */
@@ -25,7 +27,8 @@ class NQueens(val size: Int) {
             q ->
             run {
                 result.add((q.stream().map { field ->
-                    "....".substring(0, field/size) + "Q" + "....".substring(field/size + 1).reversed()
+                    val dotString = List(size) { "." }.joinToString("")
+                    dotString.substring(0, field/size) + "Q" + dotString.substring(field/size + 1).reversed()
                 }.toList()))
             }
         }
@@ -34,20 +37,21 @@ class NQueens(val size: Int) {
     }
 
     fun nQueens(foundQueens: MutableList<Int>, bitmask: Long, fieldNo : Int) {
+        foundQueens.add(fieldNo)
         val x = fieldNo%size + 1
         if(x >= size) {
-            foundQueens.add(fieldNo)
-            combinations.add(foundQueens)
+            combinations.add(foundQueens.toList())
+            foundQueens.remove(fieldNo)
             return
         }
 
         for(y in 0 until size) {
             val nxtFieldNo = toFieldNo(x, y)
             if(!capture(bitmask, nxtFieldNo)) {
-                foundQueens.add(fieldNo)
                 nQueens(foundQueens, bitmask or queen(nxtFieldNo), nxtFieldNo)
             }
         }
+        foundQueens.remove(fieldNo)
     }
 
     fun toFieldNo(x : Int, y : Int) : Int {
