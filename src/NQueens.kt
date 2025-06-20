@@ -2,13 +2,11 @@ import kotlin.math.pow
 import kotlin.streams.toList
 
 fun main() {
-
     val nQueens = NQueens(8)
     val list = nQueens.nQueens()
 }
 
 class NQueens(val size: Int) {
-
     val combinations : MutableList<List<Int>> = mutableListOf()
 
     fun nQueens() : List<List<String>> {
@@ -79,7 +77,6 @@ class NQueens(val size: Int) {
             if(bit >= idx * size && bit < idx * size + size) {
                 bitmask = bitmask or (1L shl bit)
             }
-
         }
         return bitmask
     }
