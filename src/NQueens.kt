@@ -4,6 +4,7 @@ import kotlin.streams.toList
 fun main() {
     val nQueens = NQueens(8)
     val list = nQueens.nQueens()
+    require(list.size == 92)
 }
 
 class NQueens(val size: Int) {
