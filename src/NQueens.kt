@@ -1,8 +1,8 @@
-import java.lang.System.exit
 import kotlin.math.pow
 import kotlin.streams.toList
 
 fun main() {
+
     val nQueens = NQueens(8)
     val list = nQueens.nQueens()
 }
@@ -71,14 +71,15 @@ class NQueens(val size: Int) {
             // Forward diagonal.
             var bit = fieldNo + (idx - y) * (size+1)
             if(bit >= idx * size && bit < idx * size + size) {
-                bitmask = bitmask or 2.0.pow(bit).toLong()
+                bitmask = bitmask or (1L shl bit)
             }
 
             // Backward diagonal.
             bit = fieldNo + (idx - y)  * (size-1)
             if(bit >= idx * size && bit < idx * size + size) {
-                bitmask = bitmask or 2.0.pow(bit).toLong()
+                bitmask = bitmask or (1L shl bit)
             }
+
         }
         return bitmask
     }
@@ -97,14 +98,14 @@ class NQueens(val size: Int) {
         bitmask = bitmask or (shiftValue shl (y*size))
 
         for(idx in 0 until size) {
-            bitmask = bitmask or 2.0.pow(x + idx * size).toLong()
+            bitmask = bitmask or (1L shl x + idx * size)
         }
 
         return bitmask
     }
 
     fun capture(bitmask : Long, fieldNo: Int) : Boolean {
-        return (bitmask and (1L shl fieldNo)) shr fieldNo == 1L
+        return (bitmask and (1L shl fieldNo)) ushr fieldNo == 1L
     }
 
     fun print(bitmask: Long) {
