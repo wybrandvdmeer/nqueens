@@ -2,47 +2,29 @@ import java.lang.System.exit
 import kotlin.math.pow
 
 fun main() {
-    val nQueens = NQueens(5);
-    nQueens.algo();
+    val nQueens = NQueens(4)
+    nQueens.algo()
 }
 
 class NQueens(val size: Int) {
-
     fun algo() {
         for(y in 0 until size) {
-            var fieldNo = toFieldNo(0, y);
-            var bitmask : Long = queen(fieldNo);
-
-            var notCompleted = false;
-            for(attempt in 0 until size - 1) {
-                fieldNo = nextQueen(bitmask, fieldNo);
-                if(fieldNo == -1) {
-                    notCompleted = true;
-                    break;
-                }
-                bitmask = bitmask or queen(fieldNo);
-            }
-
-            if(!notCompleted) {
-                System.out.printf("Found combination.\n")
-            }
+            algo2R(queen(toFieldNo(0, y)), toFieldNo(0, y))
         }
     }
-    fun nextQueen(bitmask : Long, fieldNo : Int) : Int {
-        val x = fieldNo%size;
 
-        for(nextY in 0 until size) {
-            val nxtFieldNo = toFieldNo(x + 1, nextY);
+    fun algo2R(bitmask: Long, fieldNo : Int) {
+        val x = fieldNo%size + 1
+        if(x >= size) {
+            return
+        }
 
-            if(nxtFieldNo >= size * size) {
-                return -1;
-            }
-
+        for(y in 0 until size) {
+            val nxtFieldNo = toFieldNo(x, y)
             if(!capture(bitmask, nxtFieldNo)) {
-                return nxtFieldNo;
+                algo2R(bitmask or queen(nxtFieldNo), nxtFieldNo)
             }
         }
-        return -1;
     }
 
     fun toFieldNo(x : Int, y : Int) : Int {
