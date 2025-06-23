@@ -7,39 +7,26 @@ fun main() {
 }
 
 class NQueens(val size: Int) {
-    val combinations : MutableList<List<Int>> = mutableListOf()
+    val combinations : MutableList<List<String>> = mutableListOf()
 
     fun nQueens() : List<List<String>> {
         combinations.clear()
 
         for(y in 0 until size) {
-            val foundQueens = mutableListOf<Int>()
+            val foundQueens = mutableListOf<String>()
             val fieldNo = toFieldNo(0, y)
             nQueens(foundQueens, queen(fieldNo), fieldNo)
         }
 
-        /* Convert to neetcode requirement. */
-        val result = mutableListOf<List<String>>()
-
-        combinations.forEach{
-            q ->
-            run {
-                result.add((q.stream().map { field ->
-                    val dotString = List(size) { "." }.joinToString("")
-                    dotString.substring(0, field/size) + "Q" + dotString.substring(field/size + 1).reversed()
-                }.toList()))
-            }
-        }
-
-        return result.toList()
+        return combinations.toList()
     }
 
-    fun nQueens(foundQueens: MutableList<Int>, bitmask: Long, fieldNo : Int) {
-        foundQueens.add(fieldNo)
+    fun nQueens(foundQueens: MutableList<String>, bitmask: Long, fieldNo : Int) {
+        foundQueens.add(fieldNoToDotString(fieldNo))
         val x = fieldNo%size + 1
         if(x >= size) {
             combinations.add(foundQueens.toList())
-            foundQueens.remove(fieldNo)
+            foundQueens.removeLast()
             return
         }
 
@@ -49,7 +36,12 @@ class NQueens(val size: Int) {
                 nQueens(foundQueens, bitmask or queen(nxtFieldNo), nxtFieldNo)
             }
         }
-        foundQueens.remove(fieldNo)
+        foundQueens.removeLast()
+    }
+
+    fun fieldNoToDotString(field : Int) : String {
+        val dotString = List(size) { "." }.joinToString("")
+        return dotString.substring(0, field/size) + "Q" + dotString.substring(field/size + 1).reversed()
     }
 
     fun toFieldNo(x : Int, y : Int) : Int {
