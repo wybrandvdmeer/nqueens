@@ -1,4 +1,3 @@
-import kotlin.math.pow
 import kotlin.streams.toList
 
 fun main() {
@@ -90,7 +89,7 @@ class NQueens(val size: Int) {
         var shiftValue : Long = 0
 
         for(idx in 0 until size) {
-            shiftValue += 2.0.pow(idx).toLong()
+            shiftValue = shiftValue or (1L shl idx)
         }
 
         bitmask = bitmask or (shiftValue shl (y*size))
