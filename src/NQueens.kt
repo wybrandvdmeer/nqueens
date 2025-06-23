@@ -72,7 +72,6 @@ class NQueens(val size: Int) {
     }
 
     fun rook(fieldNo: Int): Long {
-        val x = fieldNo%size
         val y = fieldNo/size
 
         var bitmask : Long = 0
@@ -84,9 +83,7 @@ class NQueens(val size: Int) {
 
         bitmask = bitmask or (shiftValue shl (y*size))
 
-        for(idx in 0 until size) {
-            bitmask = bitmask or (1L shl x + idx * size)
-        }
+        // Unnecessary to do the vertical line, because each queen is calculated per column (x).
 
         return bitmask
     }
