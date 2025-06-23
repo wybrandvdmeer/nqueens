@@ -1,5 +1,3 @@
-import kotlin.streams.toList
-
 fun main() {
     val nQueens = NQueens(8)
     val list = nQueens.nQueens()
