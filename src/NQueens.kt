@@ -11,9 +11,8 @@ class NQueens(val size: Int) {
         combinations.clear()
 
         for(y in 0 until size) {
-            val foundQueens = mutableListOf<String>()
-            val fieldNo = toFieldNo(0, y)
-            nQueens(foundQueens, queen(fieldNo), fieldNo)
+            val field = toFieldNo(0, y)
+            nQueens(mutableListOf(), queen(field), field)
         }
 
         return combinations.toList()
