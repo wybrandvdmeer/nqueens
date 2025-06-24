@@ -9,31 +9,24 @@ class NQueens(val size: Int) {
 
     fun nQueens() : List<List<String>> {
         combinations.clear()
-
-        for(y in 0 until size) {
-            val field = toFieldNo(0, y)
-            nQueens(mutableListOf(), queen(field), field)
-        }
-
+        nQueens(mutableListOf(), 0, 0)
         return combinations.toList()
     }
 
-    fun nQueens(foundQueens: MutableList<String>, bitmask: Long, fieldNo : Int) {
-        foundQueens.add(fieldNoToDotString(fieldNo))
-        val x = fieldNo%size + 1
-        if(x >= size) {
+    fun nQueens(foundQueens: MutableList<String>, bitmask: Long, x : Int) {
+        if(x == size) {
             combinations.add(foundQueens.toList())
-            foundQueens.removeLast()
             return
         }
 
         for(y in 0 until size) {
-            val nxtFieldNo = toFieldNo(x, y)
-            if(!capture(bitmask, nxtFieldNo)) {
-                nQueens(foundQueens, bitmask or queen(nxtFieldNo), nxtFieldNo)
+            val queenField = toFieldNo(x, y)
+            if(!capture(bitmask, queenField)) {
+                foundQueens.add(fieldNoToDotString(queenField))
+                nQueens(foundQueens, bitmask or queen(queenField), x + 1)
+                foundQueens.removeLast()
             }
         }
-        foundQueens.removeLast()
     }
 
     fun fieldNoToDotString(field : Int) : String {
